@@ -1,72 +1,22 @@
-// BoardGen.cpp
 #include "BoardGen.h"
+#include "Cell.h"
+
+
+#include <algorithm>
+#include <random>
+#include <ctime>
+#include <iostream>
 
 BoardGen::BoardGen(int rows, int cols, int bombs)
-    : rows(rows), cols(cols), bombCount(bombs)
-{
-    board.resize(rows);
-    for (int r = 0; r < rows; ++r) {
-        board[r].resize(cols);
-    }
+    : rows(rows), cols(cols), bombs(bombs), grid(rows) {
+    std::srand(static_cast<unsigned>(std::time(nullptr)));
 
-    // Fill all cells with NormalCells (neighbor count = 0)
     for (int r = 0; r < rows; ++r) {
+        grid[r].resize(cols);
         for (int c = 0; c < cols; ++c) {
-            board[r][c] = std::make_unique<NormalCell>(0);
+            grid[r][c] = std::make_unique<NormalCell>(0);
         }
     }
-
-    placeBombs();
-}
-
-
-void BoardGen::placeBombs() {
-    // Generate list of all possible positions
-    std::vector<std::pair<int, int>> positions;
-    for (int r = 0; r < rows; ++r) {
-        for (int c = 0; c < cols; ++c) {
-            positions.emplace_back(r, c);
-        }
-    }
-
-    // Shuffle the positions
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::shuffle(positions.begin(), positions.end(), gen);
-
-    // Place bombs at the first bombCount positions
-    for (int i = 0; i < bombCount; ++i) {
-        int r = positions[i].first;
-        int c = positions[i].second;
-
-        board[r][c] = std::make_unique<BombCell>();
-
-        // Update neighbor counts for 8 surrounding tiles
-        for (int dr = -1; dr <= 1; ++dr) {
-            for (int dc = -1; dc <= 1; ++dc) {
-                if (dr != 0 || dc != 0) { // Skip the bomb tile itself
-                    incrementNeighbor(r + dr, c + dc);
-                }
-            }
-        }
-    }
-}
-
-void BoardGen::incrementNeighbor(int r, int c) {
-    if (r >= 0 && r < rows && c >= 0 && c < cols) {
-        if (!board[r][c]->isBomb()) {
-            if (NormalCell* normal = dynamic_cast<NormalCell*>(board[r][c].get())) {
-                normal->setNeighborCount(normal->getNeighborCount() + 1);
-            }
-        }
-    }
-}
-
-Cell* BoardGen::getCell(int row, int col) const {
-    if (row >= 0 && row < rows && col >= 0 && col < cols) {
-        return board[row][col].get();
-    }
-    return nullptr;
 }
 
 int BoardGen::getRows() const {
@@ -75,4 +25,69 @@ int BoardGen::getRows() const {
 
 int BoardGen::getCols() const {
     return cols;
+}
+
+bool BoardGen::isValid(int row, int col) const {
+    return row >= 0 && row < rows && col >= 0 && col < cols;
+}
+
+Cell* BoardGen::getCell(int row, int col) const {
+    if (!isValid(row, col)) return nullptr;
+    return grid[row][col].get();
+}
+
+void BoardGen::generate(int startRow, int startCol) {
+    placeBombs(startRow, startCol);
+    calculateNeighbors();
+
+    // DEBUG: wypisz liczbê bomb
+    int bombCount = 0;
+    for (int r = 0; r < rows; ++r)
+        for (int c = 0; c < cols; ++c)
+            if (grid[r][c]->isBomb())
+                ++bombCount;
+    std::cout << "[DEBUG] Bombs placed: " << bombCount << "\n";
+}
+
+void BoardGen::placeBombs(int startRow, int startCol) {
+    std::vector<std::pair<int, int>> positions;
+    for (int r = 0; r < rows; ++r) {
+        for (int c = 0; c < cols; ++c) {
+            if (r == startRow && c == startCol) continue;
+            positions.emplace_back(r, c);
+        }
+    }
+
+    std::shuffle(positions.begin(), positions.end(), std::mt19937(static_cast<unsigned>(std::time(nullptr))));
+
+    for (int i = 0; i < bombs && i < static_cast<int>(positions.size()); ++i) {
+        int r = positions[i].first;
+        int c = positions[i].second;
+        grid[r][c] = std::make_unique<BombCell>();
+    }
+}
+
+void BoardGen::calculateNeighbors() {
+    for (int r = 0; r < rows; ++r) {
+        for (int c = 0; c < cols; ++c) {
+            if (grid[r][c]->isBomb()) continue;
+
+            int count = 0;
+            for (int dr = -1; dr <= 1; ++dr) {
+                for (int dc = -1; dc <= 1; ++dc) {
+                    if (dr == 0 && dc == 0) continue;
+                    int nr = r + dr;
+                    int nc = c + dc;
+                    if (isValid(nr, nc) && grid[nr][nc]->isBomb()) {
+                        ++count;
+                    }
+                }
+            }
+
+            // NIE NADPISUJ BombCell!
+            if (NormalCell* normal = dynamic_cast<NormalCell*>(grid[r][c].get())) {
+                normal->setNeighborCount(count);
+            }
+        }
+    }
 }

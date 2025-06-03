@@ -1,7 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Button.h"
 #include <vector>
+#include <memory>
+#include "Button.h"
 
 class Menu {
 private:
@@ -10,7 +11,6 @@ private:
 
 public:
     Menu(float width, float height);
-
     void update(const sf::Vector2f& mousePos, const sf::Event& event);
     void draw(sf::RenderWindow& window);
     int getClickedIndex(const sf::Vector2f& mousePos, const sf::Event& event) const;

@@ -1,6 +1,4 @@
-// Cell.h
 #pragma once
-#include <memory>
 
 class Cell {
 protected:
@@ -12,29 +10,33 @@ public:
 
     virtual bool isBomb() const = 0;
     virtual int getNeighborCount() const = 0;
+    virtual void setNeighborCount(int count) = 0;
 
-    void reveal();
-    bool isRevealed() const;
-
-    void toggleFlag();
-    bool isFlagged() const;
+    virtual void reveal();
+    virtual bool isRevealed() const;
+    virtual void toggleFlag();
+    virtual bool isFlagged() const;
 };
+
+
 
 class NormalCell : public Cell {
 private:
-    int neighborMines;
+    int neighborMines = 0;
 
 public:
     NormalCell(int neighbors = 0);
 
     bool isBomb() const override;
     int getNeighborCount() const override;
-
-    void setNeighborCount(int count);
+    void setNeighborCount(int count) override;
 };
+
+
 
 class BombCell : public Cell {
 public:
     bool isBomb() const override;
     int getNeighborCount() const override;
+    void setNeighborCount(int count) override; // mo¿na zostawiæ pust¹ implementacjê
 };

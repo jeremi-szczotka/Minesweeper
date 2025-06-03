@@ -1,8 +1,10 @@
 #include "Cell.h"
 
-// ===== Cell methods =====
+
+
 void Cell::reveal() {
-    revealed = true;
+    if (!flagged)
+        revealed = true;
 }
 
 bool Cell::isRevealed() const {
@@ -17,9 +19,9 @@ bool Cell::isFlagged() const {
     return flagged;
 }
 
-// ===== NormalCell methods =====
-NormalCell::NormalCell(int neighbors)
-    : neighborMines(neighbors) {}
+
+
+NormalCell::NormalCell(int neighbors) : neighborMines(neighbors) {}
 
 bool NormalCell::isBomb() const {
     return false;
@@ -33,11 +35,16 @@ void NormalCell::setNeighborCount(int count) {
     neighborMines = count;
 }
 
-// ===== BombCell methods =====
+
+
 bool BombCell::isBomb() const {
     return true;
 }
 
 int BombCell::getNeighborCount() const {
-    return -1;
+    return -1; 
+}
+
+void BombCell::setNeighborCount(int) {
+    
 }

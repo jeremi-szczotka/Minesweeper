@@ -6,13 +6,15 @@ Menu::Menu(float width, float height) {
         std::cerr << "Could not load the font!\n";
     }
 
-    // add button "New Game"
+    // Przycisk "New Game"
     buttons.emplace_back(std::make_unique<Button>(
-        width / 2 - 100, 100, 200, 50, "New Game", sf::Color::Blue, sf::Color::Yellow, sf::Color::Red));
-    // add button "Load Game"
-    buttons.emplace_back(std::make_unique<Button>(
-        width / 2 - 100, 180, 200, 50, "Load Game", sf::Color::Blue, sf::Color::Yellow, sf::Color::Red));
+        width / 2 - 100, 100, 200, 50, "New Game",
+        sf::Color::Blue, sf::Color::Yellow, sf::Color::Red));
 
+    // Przycisk "Load Game" (na razie nieaktywny)
+    buttons.emplace_back(std::make_unique<Button>(
+        width / 2 - 100, 180, 200, 50, "Load Game",
+        sf::Color(50, 50, 50), sf::Color::White, sf::Color::White)); // Wygaszony
 }
 
 void Menu::update(const sf::Vector2f& mousePos, const sf::Event& event) {
@@ -33,5 +35,5 @@ int Menu::getClickedIndex(const sf::Vector2f& mousePos, const sf::Event& event) 
             return static_cast<int>(i);
         }
     }
+    return -1;
 }
-
