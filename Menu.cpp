@@ -11,10 +11,10 @@ Menu::Menu(float width, float height) {
         width / 2 - 100, 100, 200, 50, "New Game",
         sf::Color::Blue, sf::Color::Yellow, sf::Color::Red));
 
-    // Przycisk "Load Game" (na razie nieaktywny)
+    
     buttons.emplace_back(std::make_unique<Button>(
         width / 2 - 100, 180, 200, 50, "Load Game",
-        sf::Color(50, 50, 50), sf::Color::White, sf::Color::White)); // Wygaszony
+        sf::Color::Red, sf::Color::White, sf::Color::White)); // Wygaszony
 }
 
 void Menu::update(const sf::Vector2f& mousePos, const sf::Event& event) {

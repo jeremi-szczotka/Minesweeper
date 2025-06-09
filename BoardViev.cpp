@@ -1,5 +1,6 @@
 ﻿#include "BoardViev.h"
 #include <iostream>
+#include <thread>
 
 BoardViev::BoardViev(BoardGen* board, int rows, int cols)
     : board(board), cellSize(32), ready(true) {
@@ -10,14 +11,14 @@ bool BoardViev::isReady() const {
     return ready;
 }
 
-void BoardViev::handleClick(const sf::Vector2f& mousePos) {
-    
-    if (!isReady()) return;
+void BoardViev::handleClick(const sf::Vector2f& mousePos)
+{
+    if (!isReady()) return;                         // gra już zakończona
 
     int col = static_cast<int>(mousePos.x / cellSize);
     int row = static_cast<int>(mousePos.y / cellSize);
 
-    if (firstClick) {
+    if (firstClick) {                               // pierwsze kliknięcie
         board->generate(row, col);
         firstClick = false;
     }
@@ -25,13 +26,52 @@ void BoardViev::handleClick(const sf::Vector2f& mousePos) {
     Cell* cell = board->getCell(row, col);
     if (!cell || cell->isRevealed() || cell->isFlagged()) return;
 
+   
     if (cell->isBomb()) {
         cell->reveal();
-        std::cout << "💥 BOOM! Game Over!\n";
-    } else {
-        revealRecursive(row, col);
+
+        // odsłoń wszystkie pozostałe bomby, żeby było widać planszę
+        for (int r = 0; r < board->getRows(); ++r)
+            for (int c = 0; c < board->getCols(); ++c)
+                if (auto* b = board->getCell(r, c); b && b->isBomb())
+                    b->reveal();
+
+        ready = false;                             
+        std::cout << "💥 BOOM! You lose!\n";
+        return;
+    }
+
+   
+    revealRecursive(row, col);
+
+   
+    int notRevealedSafe = 0;
+    for (int r = 0; r < board->getRows(); ++r)
+        for (int c = 0; c < board->getCols(); ++c) {
+            Cell* tmp = board->getCell(r, c);
+            if (tmp && !tmp->isBomb() && !tmp->isRevealed())
+                ++notRevealedSafe;
+        }
+
+    if (notRevealedSafe == 0)
+    {
+        ready = false;               
+
+        // ───────── thread ─────────
+        std::thread revealThread([this]  
+            {
+                for (int r = 0; r < board->getRows(); ++r)
+                    for (int c = 0; c < board->getCols(); ++c)
+                        if (auto* b = board->getCell(r, c); b && b->isBomb())
+                            b->reveal();
+            });
+
+        revealThread.detach();       
+
+        std::cout << "🏆 You win!\n";
     }
 }
+
 
 void BoardViev::handleRightClick(const sf::Vector2f& mousePos) {
     if (!isReady()) return;
@@ -103,3 +143,4 @@ void BoardViev::draw(sf::RenderWindow& window) {
         }
     }
 }
+

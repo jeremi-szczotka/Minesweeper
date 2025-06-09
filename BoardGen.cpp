@@ -1,7 +1,5 @@
 #include "BoardGen.h"
 #include "Cell.h"
-
-
 #include <algorithm>
 #include <random>
 #include <ctime>
@@ -90,4 +88,55 @@ void BoardGen::calculateNeighbors() {
             }
         }
     }
+}
+void BoardGen::revealCell(int row, int col) {
+    if (gameOver || gameWon) return;
+
+    if (!grid[row][col]->isRevealed()) {
+        grid[row][col]->reveal();
+        revealedCells++;
+
+        if (grid[row][col]->isBomb()) {
+            gameOver = true;
+            return;
+        }
+
+        int totalCells = grid.size() * grid[0].size();
+        int bombCount = 0;
+
+        for (const auto& row : grid) {
+            for (const auto& cell : row) {
+                if (cell->isBomb()) bombCount++;
+            }
+        }
+
+        if (revealedCells == totalCells - bombCount) {
+            gameWon = true;
+        }
+    }
+}
+
+bool BoardGen::isGameOver() const {
+    return gameOver;
+}
+
+bool BoardGen::isGameWon() const {
+    return gameWon;
+}
+
+const std::vector<std::vector<std::unique_ptr<Cell>>>& BoardGen::getGrid() const
+{
+    return grid;     
+}
+void BoardGen::setGrid(std::vector<std::vector<std::unique_ptr<Cell>>> newGrid)
+{
+    grid = std::move(newGrid);
+    rows = static_cast<int>(grid.size());
+    cols = static_cast<int>(grid[0].size());
+
+    // przeliczenie bomb w nowej siatce
+    bombs = 0;
+    for (auto& r : grid)
+        for (auto& c : r)
+            if (c && c->isBomb()) ++bombs;
 }

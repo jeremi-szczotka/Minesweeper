@@ -24,6 +24,8 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Cell.h" />
     <ClInclude Include="DifficultyMenu.h" />
+    <ClInclude Include="json.hpp" />
+    <ClInclude Include="Load.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="NormalCell.h" />
   </ItemGroup>
@@ -33,6 +35,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="DifficultyMenu.cpp" />
+    <ClCompile Include="Load.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
   </ItemGroup>
@@ -151,6 +154,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <BuildStlModules>true</BuildStlModules>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
