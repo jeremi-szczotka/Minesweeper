@@ -1,30 +1,42 @@
 ﻿#include "Load.h"
-#include "json.hpp"
-#include <fstream>
 
-using json = nlohmann::json;
 
-void Load::save(const std::vector<std::vector<std::unique_ptr<Cell>>>& board, const std::string& filename) {
+namespace fs = std::filesystem;
+using     json = nlohmann::json;
+
+
+void Load::save(const Board& board, const std::string& fileName)
+{
     json jBoard;
 
-    for (size_t i = 0; i < board.size(); ++i) {
-        for (size_t j = 0; j < board[i].size(); ++j) {
+    for (std::size_t r = 0; r < board.size(); ++r)
+        for (std::size_t c = 0; c < board[r].size(); ++c)
+        {
             json cell;
-            cell["row"] = i;
-            cell["col"] = j;
-            cell["revealed"] = board[i][j]->isRevealed();
-            cell["hasBomb"] = board[i][j]->isBomb(); // ← używamy isBomb()
-            cell["neighborCount"] = board[i][j]->getNeighborCount(); // ← oryginalna metoda
-            jBoard.push_back(cell);
+            cell["row"] = r;
+            cell["col"] = c;
+            cell["revealed"] = board[r][c]->isRevealed();
+            cell["hasBomb"] = board[r][c]->isBomb();
+            cell["neighborCount"] = board[r][c]->getNeighborCount();
+            jBoard.push_back(std::move(cell));
         }
-    }
 
-    std::ofstream file(filename);
-    file << jBoard.dump(4);
+    fs::create_directories(kSaveDir);          
+    const fs::path fullPath = kSaveDir / fileName;
+
+    std::ofstream out(fullPath);
+    if (!out)
+        throw std::runtime_error("Cannot open " + fullPath.string());
+
+    out << jBoard.dump(4);                      
 }
 
-std::vector<std::vector<std::unique_ptr<Cell>>> Load::load(const std::string& filename) {
-    std::ifstream file(filename);
+Board Load::load(const std::string& filename) {
+    const fs::path fullPath = kSaveDir / filename;   
+    std::ifstream  file(fullPath);                  
+    if (!file)                                       
+        throw std::runtime_error("Nie można otworzyć " + fullPath.string());
+
     json jBoard;
     file >> jBoard;
 
@@ -63,7 +75,7 @@ std::vector<std::vector<std::unique_ptr<Cell>>> Load::load(const std::string& fi
             ptr->reveal();
         }
 
-        
+
         if (board[i].size() <= j)
             board[i].resize(j + 1);
 
@@ -72,4 +84,5 @@ std::vector<std::vector<std::unique_ptr<Cell>>> Load::load(const std::string& fi
 
 
     return board;
+    
 }

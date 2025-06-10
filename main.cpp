@@ -14,8 +14,8 @@
 int main()
 {
     /* ─────────────────── CONFIG ─────────────────── */
-    const float cellSize = 32.f;      
-    const float sidebarW = 160.f;     
+    const float cellSize = 32.f;
+    const float sidebarW = 160.f;
 
     int  rows = 0, cols = 0, bombs = 0;
     bool startNew = false;
@@ -61,11 +61,17 @@ int main()
             unsigned winH = (unsigned)(rows * cellSize);
             sf::RenderWindow game({ winW, winH }, "Minesweeper - Game");
 
-            Button saveBtn(cols * cellSize + 15.f, 15.f,      
+            Button saveBtn(cols * cellSize + 15.f, 15.f,
                 130, 40, "Save",
                 sf::Color::Blue, sf::Color::Yellow, sf::Color::Red);
+            Button exitBtn(cols * cellSize + 15.f, 60.f, 130, 40,
+                "Exit",
+                sf::Color::Blue, sf::Color::Yellow, sf::Color::Red);
+            Button retryBtn(cols * cellSize + 15.f, 105.f, 130, 40,
+                "Retry",
+                sf::Color::Blue, sf::Color::Yellow, sf::Color::Red);
 
-            sf::RectangleShape divider({ 2.f, (float)winH });   
+            sf::RectangleShape divider({ 2.f, (float)winH });
             divider.setFillColor(sf::Color::Black);
             divider.setPosition(cols * cellSize, 0);
 
@@ -83,6 +89,13 @@ int main()
                                 Load::save(board->getGrid(), "save.json");
                                 std::cout << "[SAVE] Game saved.\n";
                             }
+                            if (exitBtn.isClicked(mp, ev)) {
+                                game.close();
+                            }
+                            if (retryBtn.isClicked(mp, ev)) {
+                                board = std::make_unique<BoardGen>(rows, cols, bombs);
+                                boardView = std::make_unique<BoardViev>(board.get(), rows, cols);
+                            }
                             else {
                                 boardView->handleClick(mp);
                             }
@@ -96,6 +109,8 @@ int main()
                 boardView->draw(game);
                 game.draw(divider);
                 saveBtn.draw(game);
+                exitBtn.draw(game);
+                retryBtn.draw(game);
                 game.display();
             }
             return 0;
@@ -145,11 +160,18 @@ int main()
         auto boardView = std::make_unique<BoardViev>(board.get(), rows, cols);
 
         Button saveBtn(cols * cellSize + 15.f, 15.f, 130, 40,
-            "Save game",
+            "Save",
+            sf::Color::Blue, sf::Color::Yellow, sf::Color::Red);
+
+        Button exitBtn(cols * cellSize + 15.f, 60.f, 130, 40,
+            "Exit",
+            sf::Color::Blue, sf::Color::Yellow, sf::Color::Red);
+        Button retryBtn(cols * cellSize + 15.f, 105.f, 130, 40,
+            "Retry",
             sf::Color::Blue, sf::Color::Yellow, sf::Color::Red);
 
         sf::RectangleShape divider({ 2.f, (float)winH });
-        divider.setFillColor(sf::Color::Black);
+        divider.setFillColor(sf::Color::White);
         divider.setPosition(cols * cellSize, 0);
 
         while (game.isOpen()) {
@@ -159,6 +181,8 @@ int main()
 
                 sf::Vector2f mp = (sf::Vector2f)sf::Mouse::getPosition(game);
                 saveBtn.update(mp, ev);
+                exitBtn.update(mp, ev);
+                retryBtn.update(mp, ev);
 
                 if (ev.type == sf::Event::MouseButtonPressed) {
                     if (ev.mouseButton.button == sf::Mouse::Left) {
@@ -166,6 +190,14 @@ int main()
                             Load::save(board->getGrid(), "save.json");
                             std::cout << "[SAVE] Game saved.\n";
                             game.close();
+                        }
+                        if (exitBtn.isClicked(mp, ev)) {
+                            game.close();
+                        }
+                        if (retryBtn.isClicked(mp, ev)) {
+                            board = std::make_unique<BoardGen>(rows, cols, bombs);
+                            boardView = std::make_unique<BoardViev>(board.get(), rows, cols);
+
                         }
                         else {
                             boardView->handleClick(mp);
@@ -180,6 +212,8 @@ int main()
             boardView->draw(game);
             game.draw(divider);
             saveBtn.draw(game);
+            exitBtn.draw(game);
+            retryBtn.draw(game);
             game.display();
         }
     }
