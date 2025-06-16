@@ -50,7 +50,7 @@ Board Load::load(const std::string& filename) {
     const fs::path fullPath = kSaveDir / filename;   
     std::ifstream  file(fullPath);                  
     if (!file)                                       
-        throw std::runtime_error("Nie można otworzyć " + fullPath.string());
+        throw std::runtime_error("Cannot open " + fullPath.string());
 
     json jBoard;
     file >> jBoard;

@@ -9,14 +9,14 @@
     {
         "col": 1,
         "hasBomb": false,
-        "neighborCount": 0,
+        "neighborCount": 1,
         "revealed": false,
         "row": 0
     },
     {
         "col": 2,
-        "hasBomb": false,
-        "neighborCount": 1,
+        "hasBomb": true,
+        "neighborCount": -1,
         "revealed": false,
         "row": 0
     },
@@ -29,15 +29,15 @@
     },
     {
         "col": 4,
-        "hasBomb": false,
-        "neighborCount": 1,
+        "hasBomb": true,
+        "neighborCount": -1,
         "revealed": false,
         "row": 0
     },
     {
         "col": 5,
         "hasBomb": false,
-        "neighborCount": 0,
+        "neighborCount": 1,
         "revealed": false,
         "row": 0
     },
@@ -65,210 +65,210 @@
     {
         "col": 1,
         "hasBomb": false,
-        "neighborCount": 0,
+        "neighborCount": 1,
         "revealed": false,
         "row": 1
     },
     {
         "col": 2,
         "hasBomb": false,
-        "neighborCount": 1,
-        "revealed": false,
-        "row": 1
-    },
-    {
-        "col": 3,
-        "hasBomb": false,
-        "neighborCount": 1,
-        "revealed": true,
-        "row": 1
-    },
-    {
-        "col": 4,
-        "hasBomb": false,
-        "neighborCount": 1,
-        "revealed": false,
-        "row": 1
-    },
-    {
-        "col": 5,
-        "hasBomb": false,
-        "neighborCount": 0,
-        "revealed": false,
-        "row": 1
-    },
-    {
-        "col": 6,
-        "hasBomb": false,
         "neighborCount": 2,
         "revealed": false,
         "row": 1
-    },
-    {
-        "col": 7,
-        "hasBomb": true,
-        "neighborCount": -1,
-        "revealed": false,
-        "row": 1
-    },
-    {
-        "col": 0,
-        "hasBomb": false,
-        "neighborCount": 0,
-        "revealed": false,
-        "row": 2
-    },
-    {
-        "col": 1,
-        "hasBomb": false,
-        "neighborCount": 1,
-        "revealed": false,
-        "row": 2
-    },
-    {
-        "col": 2,
-        "hasBomb": false,
-        "neighborCount": 2,
-        "revealed": false,
-        "row": 2
-    },
-    {
-        "col": 3,
-        "hasBomb": false,
-        "neighborCount": 3,
-        "revealed": false,
-        "row": 2
-    },
-    {
-        "col": 4,
-        "hasBomb": false,
-        "neighborCount": 2,
-        "revealed": false,
-        "row": 2
-    },
-    {
-        "col": 5,
-        "hasBomb": false,
-        "neighborCount": 1,
-        "revealed": false,
-        "row": 2
-    },
-    {
-        "col": 6,
-        "hasBomb": false,
-        "neighborCount": 2,
-        "revealed": false,
-        "row": 2
-    },
-    {
-        "col": 7,
-        "hasBomb": true,
-        "neighborCount": -1,
-        "revealed": false,
-        "row": 2
-    },
-    {
-        "col": 0,
-        "hasBomb": false,
-        "neighborCount": 0,
-        "revealed": false,
-        "row": 3
-    },
-    {
-        "col": 1,
-        "hasBomb": false,
-        "neighborCount": 1,
-        "revealed": false,
-        "row": 3
-    },
-    {
-        "col": 2,
-        "hasBomb": true,
-        "neighborCount": -1,
-        "revealed": false,
-        "row": 3
-    },
-    {
-        "col": 3,
-        "hasBomb": true,
-        "neighborCount": -1,
-        "revealed": false,
-        "row": 3
-    },
-    {
-        "col": 4,
-        "hasBomb": true,
-        "neighborCount": -1,
-        "revealed": false,
-        "row": 3
-    },
-    {
-        "col": 5,
-        "hasBomb": false,
-        "neighborCount": 1,
-        "revealed": false,
-        "row": 3
-    },
-    {
-        "col": 6,
-        "hasBomb": false,
-        "neighborCount": 1,
-        "revealed": false,
-        "row": 3
-    },
-    {
-        "col": 7,
-        "hasBomb": false,
-        "neighborCount": 1,
-        "revealed": false,
-        "row": 3
-    },
-    {
-        "col": 0,
-        "hasBomb": false,
-        "neighborCount": 0,
-        "revealed": false,
-        "row": 4
-    },
-    {
-        "col": 1,
-        "hasBomb": false,
-        "neighborCount": 1,
-        "revealed": false,
-        "row": 4
-    },
-    {
-        "col": 2,
-        "hasBomb": false,
-        "neighborCount": 3,
-        "revealed": false,
-        "row": 4
     },
     {
         "col": 3,
         "hasBomb": false,
         "neighborCount": 4,
         "revealed": false,
-        "row": 4
+        "row": 1
     },
     {
         "col": 4,
         "hasBomb": false,
         "neighborCount": 3,
         "revealed": false,
+        "row": 1
+    },
+    {
+        "col": 5,
+        "hasBomb": false,
+        "neighborCount": 2,
+        "revealed": false,
+        "row": 1
+    },
+    {
+        "col": 6,
+        "hasBomb": false,
+        "neighborCount": 1,
+        "revealed": false,
+        "row": 1
+    },
+    {
+        "col": 7,
+        "hasBomb": true,
+        "neighborCount": -1,
+        "revealed": false,
+        "row": 1
+    },
+    {
+        "col": 0,
+        "hasBomb": false,
+        "neighborCount": 1,
+        "revealed": false,
+        "row": 2
+    },
+    {
+        "col": 1,
+        "hasBomb": false,
+        "neighborCount": 1,
+        "revealed": false,
+        "row": 2
+    },
+    {
+        "col": 2,
+        "hasBomb": false,
+        "neighborCount": 1,
+        "revealed": false,
+        "row": 2
+    },
+    {
+        "col": 3,
+        "hasBomb": false,
+        "neighborCount": 1,
+        "revealed": false,
+        "row": 2
+    },
+    {
+        "col": 4,
+        "hasBomb": true,
+        "neighborCount": -1,
+        "revealed": false,
+        "row": 2
+    },
+    {
+        "col": 5,
+        "hasBomb": false,
+        "neighborCount": 2,
+        "revealed": false,
+        "row": 2
+    },
+    {
+        "col": 6,
+        "hasBomb": false,
+        "neighborCount": 2,
+        "revealed": false,
+        "row": 2
+    },
+    {
+        "col": 7,
+        "hasBomb": false,
+        "neighborCount": 1,
+        "revealed": false,
+        "row": 2
+    },
+    {
+        "col": 0,
+        "hasBomb": false,
+        "neighborCount": 1,
+        "revealed": false,
+        "row": 3
+    },
+    {
+        "col": 1,
+        "hasBomb": true,
+        "neighborCount": -1,
+        "revealed": false,
+        "row": 3
+    },
+    {
+        "col": 2,
+        "hasBomb": false,
+        "neighborCount": 1,
+        "revealed": true,
+        "row": 3
+    },
+    {
+        "col": 3,
+        "hasBomb": false,
+        "neighborCount": 1,
+        "revealed": true,
+        "row": 3
+    },
+    {
+        "col": 4,
+        "hasBomb": false,
+        "neighborCount": 2,
+        "revealed": true,
+        "row": 3
+    },
+    {
+        "col": 5,
+        "hasBomb": true,
+        "neighborCount": -1,
+        "revealed": false,
+        "row": 3
+    },
+    {
+        "col": 6,
+        "hasBomb": false,
+        "neighborCount": 1,
+        "revealed": false,
+        "row": 3
+    },
+    {
+        "col": 7,
+        "hasBomb": false,
+        "neighborCount": 0,
+        "revealed": false,
+        "row": 3
+    },
+    {
+        "col": 0,
+        "hasBomb": false,
+        "neighborCount": 1,
+        "revealed": true,
+        "row": 4
+    },
+    {
+        "col": 1,
+        "hasBomb": false,
+        "neighborCount": 1,
+        "revealed": true,
+        "row": 4
+    },
+    {
+        "col": 2,
+        "hasBomb": false,
+        "neighborCount": 1,
+        "revealed": true,
+        "row": 4
+    },
+    {
+        "col": 3,
+        "hasBomb": false,
+        "neighborCount": 0,
+        "revealed": true,
+        "row": 4
+    },
+    {
+        "col": 4,
+        "hasBomb": false,
+        "neighborCount": 2,
+        "revealed": true,
         "row": 4
     },
     {
         "col": 5,
         "hasBomb": false,
-        "neighborCount": 1,
+        "neighborCount": 2,
         "revealed": false,
         "row": 4
     },
     {
         "col": 6,
         "hasBomb": false,
-        "neighborCount": 0,
+        "neighborCount": 2,
         "revealed": false,
         "row": 4
     },
@@ -282,49 +282,49 @@
     {
         "col": 0,
         "hasBomb": false,
-        "neighborCount": 1,
-        "revealed": false,
+        "neighborCount": 0,
+        "revealed": true,
         "row": 5
     },
     {
         "col": 1,
         "hasBomb": false,
-        "neighborCount": 1,
-        "revealed": false,
+        "neighborCount": 0,
+        "revealed": true,
         "row": 5
     },
     {
         "col": 2,
         "hasBomb": false,
-        "neighborCount": 2,
-        "revealed": false,
+        "neighborCount": 0,
+        "revealed": true,
         "row": 5
     },
     {
         "col": 3,
+        "hasBomb": false,
+        "neighborCount": 0,
+        "revealed": true,
+        "row": 5
+    },
+    {
+        "col": 4,
+        "hasBomb": false,
+        "neighborCount": 1,
+        "revealed": true,
+        "row": 5
+    },
+    {
+        "col": 5,
         "hasBomb": true,
         "neighborCount": -1,
         "revealed": false,
         "row": 5
     },
     {
-        "col": 4,
-        "hasBomb": false,
-        "neighborCount": 2,
-        "revealed": false,
-        "row": 5
-    },
-    {
-        "col": 5,
-        "hasBomb": false,
-        "neighborCount": 1,
-        "revealed": false,
-        "row": 5
-    },
-    {
         "col": 6,
         "hasBomb": false,
-        "neighborCount": 0,
+        "neighborCount": 1,
         "revealed": false,
         "row": 5
     },
@@ -338,112 +338,112 @@
     {
         "col": 0,
         "hasBomb": false,
-        "neighborCount": 1,
-        "revealed": false,
+        "neighborCount": 0,
+        "revealed": true,
         "row": 6
     },
     {
         "col": 1,
-        "hasBomb": true,
-        "neighborCount": -1,
-        "revealed": false,
+        "hasBomb": false,
+        "neighborCount": 0,
+        "revealed": true,
         "row": 6
     },
     {
         "col": 2,
         "hasBomb": false,
-        "neighborCount": 3,
-        "revealed": false,
+        "neighborCount": 0,
+        "revealed": true,
         "row": 6
     },
     {
         "col": 3,
         "hasBomb": false,
-        "neighborCount": 3,
-        "revealed": false,
+        "neighborCount": 0,
+        "revealed": true,
         "row": 6
     },
     {
         "col": 4,
-        "hasBomb": true,
-        "neighborCount": -1,
-        "revealed": false,
+        "hasBomb": false,
+        "neighborCount": 2,
+        "revealed": true,
         "row": 6
     },
     {
         "col": 5,
         "hasBomb": false,
-        "neighborCount": 1,
+        "neighborCount": 2,
         "revealed": false,
         "row": 6
     },
     {
         "col": 6,
         "hasBomb": false,
-        "neighborCount": 0,
+        "neighborCount": 3,
         "revealed": false,
         "row": 6
     },
     {
         "col": 7,
         "hasBomb": false,
-        "neighborCount": 0,
+        "neighborCount": 1,
         "revealed": false,
         "row": 6
     },
     {
         "col": 0,
         "hasBomb": false,
-        "neighborCount": 1,
-        "revealed": false,
+        "neighborCount": 0,
+        "revealed": true,
         "row": 7
     },
     {
         "col": 1,
         "hasBomb": false,
-        "neighborCount": 2,
-        "revealed": false,
+        "neighborCount": 0,
+        "revealed": true,
         "row": 7
     },
     {
         "col": 2,
-        "hasBomb": true,
-        "neighborCount": -1,
-        "revealed": false,
+        "hasBomb": false,
+        "neighborCount": 0,
+        "revealed": true,
         "row": 7
     },
     {
         "col": 3,
         "hasBomb": false,
-        "neighborCount": 2,
-        "revealed": false,
+        "neighborCount": 0,
+        "revealed": true,
         "row": 7
     },
     {
         "col": 4,
         "hasBomb": false,
         "neighborCount": 1,
-        "revealed": false,
+        "revealed": true,
         "row": 7
     },
     {
         "col": 5,
-        "hasBomb": false,
-        "neighborCount": 1,
+        "hasBomb": true,
+        "neighborCount": -1,
         "revealed": false,
         "row": 7
     },
     {
         "col": 6,
         "hasBomb": false,
-        "neighborCount": 0,
+        "neighborCount": 2,
         "revealed": false,
         "row": 7
     },
     {
         "col": 7,
-        "hasBomb": false,
-        "neighborCount": 0,
+        "hasBomb": true,
+        "neighborCount": -1,
         "revealed": false,
         "row": 7
     }

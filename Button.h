@@ -23,4 +23,6 @@ public:
     void update(const sf::Vector2f& mousePos, const sf::Event& event);
     void draw(sf::RenderWindow& window);
     bool isClicked(const sf::Vector2f& mousePos, const sf::Event& event) const;
+    std::string getText() const;
+    void setFont(const sf::Font& font);
 };

@@ -82,7 +82,6 @@ void BoardGen::calculateNeighbors() {
                 }
             }
 
-            // NIE NADPISUJ BombCell!
             if (NormalCell* normal = dynamic_cast<NormalCell*>(grid[r][c].get())) {
                 normal->setNeighborCount(count);
             }

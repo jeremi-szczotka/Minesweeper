@@ -63,3 +63,11 @@ bool Button::isClicked(const sf::Vector2f& mousePos, const sf::Event& event) con
         event.type == sf::Event::MouseButtonPressed &&
         event.mouseButton.button == sf::Mouse::Left);
 }
+
+std::string Button::getText() const{
+      return text.getString();
+}
+
+void Button::setFont(const sf::Font& font) {
+    text.setFont(font);
+}

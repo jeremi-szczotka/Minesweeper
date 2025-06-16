@@ -13,9 +13,10 @@
 
 class Load
 {
-    public:        
+    public:     
+        inline static std::string selectedFile;
         static void save(const Board& board, const std::string& fileName);       
         static Board load(const std::string& fileName);
-    private:       
         static inline const std::filesystem::path kSaveDir{ R"(C:\Users\jeren\OneDrive\Pulpit\minesweeper git\Minesweeper\saved)" };
+      
 };

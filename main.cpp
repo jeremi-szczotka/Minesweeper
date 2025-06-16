@@ -6,7 +6,9 @@
 #include "Load.h"
 #include "Button.h"
 #include <memory>
+#include "LoadMenu.h"
 #include <iostream>
+#include <time.h>
 
 
 
@@ -21,6 +23,7 @@ int main()
     bool startNew = false;
     bool loadSaved = false;
 
+    
     /* ─────────────────── MENU ─────────────────── */
     {
         sf::RenderWindow win({ 600, 400 }, "Minesweeper - Menu");
@@ -36,7 +39,54 @@ int main()
                 menu.update(mp, ev);
                 int idx = menu.getClickedIndex(mp, ev);
                 if (idx == 0) { startNew = true;  win.close(); }
-                if (idx == 1) { loadSaved = true; win.close(); }
+                if (idx == 1) {
+
+                    namespace fs = std::filesystem;
+                    std::vector<std::string> saves;
+                    for (const auto& entry : fs::directory_iterator(Load::kSaveDir)) {
+                        if (entry.is_regular_file() && entry.path().extension() == ".json") {
+                            saves.push_back(entry.path().filename().string());
+                        }
+                    }
+
+                    if (saves.empty()) {
+                        std::cerr << "[LOAD] No saved games found!\n";
+                        win.close();
+                        return 0;
+                    }
+
+                   
+                    sf::RenderWindow saveWin({ 600, 400 }, "Choose Save File");
+                    LoadMenu loadMenu(saves, saveWin.getSize().x);
+                    std::string selectedFile;
+
+                    while (saveWin.isOpen()) {
+                        sf::Event ev;
+                        sf::Vector2f mp = (sf::Vector2f)sf::Mouse::getPosition(saveWin);
+                        while (saveWin.pollEvent(ev)) {
+                            if (ev.type == sf::Event::Closed) return 0;
+
+                            loadMenu.update(mp, ev);
+                            selectedFile = loadMenu.getSelectedFile(mp, ev);
+                            if (!selectedFile.empty()) {
+                                loadSaved = true;
+                                saveWin.close();
+                                break;
+                            }
+                        }
+                        saveWin.clear();
+                        loadMenu.draw(saveWin);
+                        saveWin.display();
+                    }
+
+                    if (selectedFile.empty()) {
+                        win.close(); 
+                    }
+
+                   
+                    Load::selectedFile = selectedFile; 
+                    win.close();
+                }
             }
             win.clear();
             menu.draw(win);
@@ -44,14 +94,15 @@ int main()
         }
     }
 
+
     /* ─────────────────── LOAD GAME PATH ─────────────────── */
     if (loadSaved)
     {
         try {
-            auto grid = Load::load("save.json");
+            auto grid = Load::load(Load::selectedFile);
             rows = (int)grid.size();
             cols = (int)grid[0].size();
-            bombs = 0;
+         
 
             auto board = std::make_unique<BoardGen>(rows, cols, bombs);
             board->setGrid(std::move(grid));
@@ -82,19 +133,40 @@ int main()
 
                     sf::Vector2f mp = (sf::Vector2f)sf::Mouse::getPosition(game);
                     saveBtn.update(mp, ev);
+                    exitBtn.update(mp, ev);   
+                    retryBtn.update(mp, ev);
 
                     if (ev.type == sf::Event::MouseButtonPressed) {
                         if (ev.mouseButton.button == sf::Mouse::Left) {
                             if (saveBtn.isClicked(mp, ev)) {
-                                Load::save(board->getGrid(), "save.json");
+                                std::time_t now = std::time(nullptr);
+                                std::tm localTime;
+                                localtime_s(&localTime, &now);
+                                
+                                std::ostringstream ss;
+                                ss << std::put_time(&localTime, "%Y-%m-%d_%H-%M-%S");
+                                std::string timestamp = ss.str();
+                                std::string filename = "save_" + timestamp + ".json";
+                                Load::save(board->getGrid(), filename);
                                 std::cout << "[SAVE] Game saved.\n";
                             }
                             if (exitBtn.isClicked(mp, ev)) {
                                 game.close();
                             }
                             if (retryBtn.isClicked(mp, ev)) {
+                                if (cols == 8) {
+                                    bombs = 10;
+                                }
+                                if(cols == 16) { 
+                                    bombs = 40; 
+                                }
+                                else {
+                                    bombs = 99;
+                                }
                                 board = std::make_unique<BoardGen>(rows, cols, bombs);
                                 boardView = std::make_unique<BoardViev>(board.get(), rows, cols);
+                                
+
                             }
                             else {
                                 boardView->handleClick(mp);
@@ -187,7 +259,15 @@ int main()
                 if (ev.type == sf::Event::MouseButtonPressed) {
                     if (ev.mouseButton.button == sf::Mouse::Left) {
                         if (saveBtn.isClicked(mp, ev)) {
-                            Load::save(board->getGrid(), "save.json");
+                            std::time_t now = std::time(nullptr);
+                            std::tm localTime;
+                            localtime_s(&localTime, &now);
+
+                            std::ostringstream ss;
+                            ss << std::put_time(&localTime, "%Y-%m-%d_%H-%M-%S");
+                            std::string timestamp = ss.str();
+                            std::string filename = "save_" + timestamp + ".json";
+                            Load::save(board->getGrid(), filename);
                             std::cout << "[SAVE] Game saved.\n";
                             game.close();
                         }

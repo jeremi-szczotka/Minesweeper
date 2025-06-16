@@ -14,11 +14,12 @@ public:
     bool isReady() const;
     bool isGameOver() const { return gameOver; }
     bool isGameWon()  const { return gameWon; }
+    void resetFirstClick() { firstClick = true; }
 
 private:
     bool gameOver = false;
     bool gameWon = false;
-    int  revealedCells = 0;      // ile pól zostało już odkrytych
+    int  revealedCells = 0;      
     BoardGen* board;
     int cellSize = 32;
     bool ready = false;

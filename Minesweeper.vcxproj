@@ -26,6 +26,7 @@
     <ClInclude Include="DifficultyMenu.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="Load.h" />
+    <ClInclude Include="LoadMenu.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="NormalCell.h" />
   </ItemGroup>
@@ -36,6 +37,7 @@
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="DifficultyMenu.cpp" />
     <ClCompile Include="Load.cpp" />
+    <ClCompile Include="LoadMenu.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
   </ItemGroup>
