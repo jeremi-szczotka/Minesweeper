@@ -21,14 +21,29 @@ void Load::save(const Board& board, const std::string& fileName)
             jBoard.push_back(std::move(cell));
         }
 
-    fs::create_directories(kSaveDir);          
-    const fs::path fullPath = kSaveDir / fileName;
+  
+    constexpr char subject[] =
+        R"(C:\Users\jeren\OneDrive\Pulpit\minesweeper git\Minesweeper\saved)";
 
-    std::ofstream out(fullPath);
-    if (!out)
-        throw std::runtime_error("Cannot open " + fullPath.string());
+    std::regex pattern(R"(C:\\Users\\.+\\OneDrive\\Pulpit\\minesweeper git\\Minesweeper\\saved)");
 
-    out << jBoard.dump(4);                      
+    if (std::regex_match(subject, pattern)) {
+        std::cout << "Success: path matches!\n";
+    }
+    else {
+        std::cout << "Failure: path does not match.\n";
+    }
+
+
+    fs::create_directories(kSaveDir);
+        const fs::path fullPath = kSaveDir / fileName;
+
+        std::ofstream out(fullPath);
+        if (!out) {
+            throw std::runtime_error("Cannot open " + fullPath.string());
+        }
+
+    out << jBoard.dump(4);
 }
 
 Board Load::load(const std::string& filename) {

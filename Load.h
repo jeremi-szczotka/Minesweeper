@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <vector>
 #include <memory>
 #include <string>
@@ -6,6 +7,7 @@
 #include <filesystem>
 #include "json.hpp"
 #include <fstream>
+#include <regex>
 
     using Board = std::vector<std::vector<std::unique_ptr<Cell>>>;
 
