@@ -5,46 +5,6 @@ namespace fs = std::filesystem;
 using     json = nlohmann::json;
 
 
-void Load::save(const Board& board, const std::string& fileName)
-{
-    json jBoard;
-
-    for (std::size_t r = 0; r < board.size(); ++r)
-        for (std::size_t c = 0; c < board[r].size(); ++c)
-        {
-            json cell;
-            cell["row"] = r;
-            cell["col"] = c;
-            cell["revealed"] = board[r][c]->isRevealed();
-            cell["hasBomb"] = board[r][c]->isBomb();
-            cell["neighborCount"] = board[r][c]->getNeighborCount();
-            jBoard.push_back(std::move(cell));
-        }
-
-  
-    constexpr char subject[] =
-        R"(C:\Users\jeren\OneDrive\Pulpit\minesweeper git\Minesweeper\saved)";
-
-    std::regex pattern(R"(C:\\Users\\.+\\OneDrive\\Pulpit\\minesweeper git\\Minesweeper\\saved)");
-
-    if (std::regex_match(subject, pattern)) {
-        std::cout << "Success: path matches!\n";
-    }
-    else {
-        std::cout << "Failure: path does not match.\n";
-    }
-
-
-    fs::create_directories(kSaveDir);
-        const fs::path fullPath = kSaveDir / fileName;
-
-        std::ofstream out(fullPath);
-        if (!out) {
-            throw std::runtime_error("Cannot open " + fullPath.string());
-        }
-
-    out << jBoard.dump(4);
-}
 
 Board Load::load(const std::string& filename) {
     const fs::path fullPath = kSaveDir / filename;   
@@ -101,3 +61,5 @@ Board Load::load(const std::string& filename) {
     return board;
     
 }
+
+

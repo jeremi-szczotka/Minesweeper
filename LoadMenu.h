@@ -4,6 +4,7 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <ranges>
 
 class LoadMenu {
 private:

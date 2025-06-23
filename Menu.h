@@ -1,8 +1,21 @@
 #pragma once
-#include <SFML/Graphics.hpp>
 #include <vector>
-#include <memory>
 #include "Button.h"
+#include <SFML/Graphics.hpp>
+#include "DifficultyMenu.h"
+#include "BoardViev.h"
+#include "BoardGen.h"
+#include "Load.h"
+#include "Button.h"
+#include <memory>
+#include "LoadMenu.h"
+#include <iostream>
+#include <time.h>
+#include <thread>
+#include <atomic>
+#include <mutex>
+#include <chrono>
+
 
 class Menu {
 private:

@@ -1,27 +1,59 @@
-﻿#include <SFML/Graphics.hpp>
-#include "Menu.h"
-#include "DifficultyMenu.h"
-#include "BoardViev.h"
-#include "BoardGen.h"
-#include "Load.h"
-#include "Button.h"
-#include <memory>
-#include "LoadMenu.h"
-#include <iostream>
-#include <time.h>
+﻿#include "Menu.h"
 
 
+std::atomic<bool> loadRequested{ false };
 
+std::vector<std::string> asyncSaves;
+std::mutex asyncMtx;
+
+std::vector<std::string> loadGames() {
+    namespace fs = std::filesystem;
+
+    auto filtered = fs::directory_iterator(Load::kSaveDir)
+        | std::views::filter([](const fs::directory_entry& entry) {
+        return entry.is_regular_file() &&
+            entry.path().extension() == ".json";
+            })
+        | std::views::transform([](const fs::directory_entry& entry) {
+                return entry.path().filename().string();
+            });
+
+            std::vector<std::string> saves;
+            for (const auto& name : filtered) {
+                saves.push_back(name);
+            }
+            return saves;
+}
 
 int main()
 {
-    /* ─────────────────── CONFIG ─────────────────── */
+   
     const float cellSize = 32.f;
     const float sidebarW = 160.f;
 
     int  rows = 0, cols = 0, bombs = 0;
     bool startNew = false;
     bool loadSaved = false;
+    
+    //Thread
+    std::thread loaderThread([&]() {
+        while (true) {
+            if (loadRequested.load()) {
+          
+                auto tmp = loadGames();
+
+              
+                {
+                    std::lock_guard<std::mutex> lk(asyncMtx);
+                    asyncSaves = std::move(tmp);
+                }
+
+                loadRequested = false;
+            }
+            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        }
+        });
+    loaderThread.detach();
 
     
     /* ─────────────────── MENU ─────────────────── */
@@ -40,22 +72,26 @@ int main()
                 int idx = menu.getClickedIndex(mp, ev);
                 if (idx == 0) { startNew = true;  win.close(); }
                 if (idx == 1) {
+                    
+                    loadRequested = true;
 
-                    namespace fs = std::filesystem;
+                    
+                    while (loadRequested) {
+                        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+                    }
+
+                    
                     std::vector<std::string> saves;
-                    for (const auto& entry : fs::directory_iterator(Load::kSaveDir)) {
-                        if (entry.is_regular_file() && entry.path().extension() == ".json") {
-                            saves.push_back(entry.path().filename().string());
-                        }
+                    {
+                        std::lock_guard<std::mutex> lk(asyncMtx);
+                        saves = asyncSaves;
                     }
 
                     if (saves.empty()) {
                         std::cerr << "[LOAD] No saved games found!\n";
-                        win.close();
-                        return 0;
+                        break;
                     }
 
-                   
                     sf::RenderWindow saveWin({ 600, 400 }, "Choose Save File");
                     LoadMenu loadMenu(saves, saveWin.getSize().x);
                     std::string selectedFile;
@@ -80,11 +116,10 @@ int main()
                     }
 
                     if (selectedFile.empty()) {
-                        win.close(); 
+                        win.close();
                     }
 
-                   
-                    Load::selectedFile = selectedFile; 
+                    Load::selectedFile = selectedFile;
                     win.close();
                 }
             }
@@ -112,14 +147,11 @@ int main()
             unsigned winH = (unsigned)(rows * cellSize);
             sf::RenderWindow game({ winW, winH }, "Minesweeper - Game");
 
-            Button saveBtn(cols * cellSize + 15.f, 15.f,
-                130, 40, "Save",
+            Button saveBtn(cols * cellSize + 15.f, 15.f, 130, 40, "Save",
                 sf::Color::Blue, sf::Color::Yellow, sf::Color::Red);
-            Button exitBtn(cols * cellSize + 15.f, 60.f, 130, 40,
-                "Exit",
+            Button exitBtn(cols * cellSize + 15.f, 60.f, 130, 40,"Exit",
                 sf::Color::Blue, sf::Color::Yellow, sf::Color::Red);
-            Button retryBtn(cols * cellSize + 15.f, 105.f, 130, 40,
-                "Retry",
+            Button retryBtn(cols * cellSize + 15.f, 105.f, 130, 40,"Retry",
                 sf::Color::Blue, sf::Color::Yellow, sf::Color::Red);
 
             sf::RectangleShape divider({ 2.f, (float)winH });
