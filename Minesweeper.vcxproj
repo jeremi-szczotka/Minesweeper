@@ -28,7 +28,6 @@
     <ClInclude Include="Load.h" />
     <ClInclude Include="LoadMenu.h" />
     <ClInclude Include="Menu.h" />
-    <ClInclude Include="NormalCell.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BoardGen.cpp" />

@@ -37,8 +37,7 @@ Cell* BoardGen::getCell(int row, int col) const {
 void BoardGen::generate(int startRow, int startCol) {
     placeBombs(startRow, startCol);
     calculateNeighbors();
-
-    // DEBUG: wypisz liczbê bomb
+   
     int bombCount = 0;
     for (int r = 0; r < rows; ++r)
         for (int c = 0; c < cols; ++c)

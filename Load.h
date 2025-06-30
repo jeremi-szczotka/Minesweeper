@@ -10,10 +10,11 @@
 #include <regex>
 #include <concepts>
 
-template<typename T>
-concept IsString = std::same_as<T, std::string>;
 
 using Board = std::vector<std::vector<std::unique_ptr<Cell>>>;
+
+template<typename T>
+concept IsString = std::same_as<T, std::string>;
 
 class Load
 {

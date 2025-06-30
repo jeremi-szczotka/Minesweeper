@@ -13,12 +13,12 @@ bool BoardViev::isReady() const {
 
 void BoardViev::handleClick(const sf::Vector2f& mousePos)
 {
-    if (!isReady()) return;                         // gra już zakończona
+    if (!isReady()) return;                         
 
     int col = static_cast<int>(mousePos.x / cellSize);
     int row = static_cast<int>(mousePos.y / cellSize);
 
-    if (firstClick) {                               // pierwsze kliknięcie
+    if (firstClick) {                              
         board->generate(row, col);
         firstClick = false;
     }
@@ -30,7 +30,7 @@ void BoardViev::handleClick(const sf::Vector2f& mousePos)
     if (cell->isBomb()) {
         cell->reveal();
 
-        // odsłoń wszystkie pozostałe bomby, żeby było widać planszę
+       
         for (int r = 0; r < board->getRows(); ++r)
             for (int c = 0; c < board->getCols(); ++c)
                 if (auto* b = board->getCell(r, c); b && b->isBomb())
@@ -133,7 +133,7 @@ void BoardViev::draw(sf::RenderWindow& window) {
                 if (cell->isFlagged()) {
                     sf::Text flag;
                     flag.setFont(font);
-                    flag.setString("F"); // użyj F zamiast 🚩 jeśli masz ostrzeżenie
+                    flag.setString("F"); 
                     flag.setCharacterSize(20);
                     flag.setFillColor(sf::Color::Red);
                     flag.setPosition(c * cellSize + 6, r * cellSize + 2);

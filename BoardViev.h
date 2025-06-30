@@ -15,6 +15,7 @@ public:
     bool isGameOver() const { return gameOver; }
     bool isGameWon()  const { return gameWon; }
     void resetFirstClick() { firstClick = true; }
+    bool firstClick = true;
 
 private:
     bool gameOver = false;
@@ -24,7 +25,6 @@ private:
     int cellSize = 32;
     bool ready = false;
     sf::Font font;
-    bool firstClick = true;
 
     void revealRecursive(int row, int col);
 };

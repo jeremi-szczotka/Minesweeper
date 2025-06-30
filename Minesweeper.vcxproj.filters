@@ -30,9 +30,6 @@
     <ClInclude Include="BoardViev.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NormalCell.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DifficultyMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>

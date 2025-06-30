@@ -38,5 +38,5 @@ class BombCell : public Cell {
 public:
     bool isBomb() const override;
     int getNeighborCount() const override;
-    void setNeighborCount(int count) override; // mo¿na zostawiæ pust¹ implementacjê
+    void setNeighborCount(int count) override; 
 };

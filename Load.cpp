@@ -1,11 +1,11 @@
 ﻿#include "Load.h"
 
 
-namespace fs = std::filesystem;
 using     json = nlohmann::json;
 
 
 
+namespace fs = std::filesystem;
 Board Load::load(const std::string& filename) {
     const fs::path fullPath = kSaveDir / filename;   
     std::ifstream  file(fullPath);                  

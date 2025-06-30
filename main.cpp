@@ -136,9 +136,10 @@ int main()
         try {
             auto grid = Load::load(Load::selectedFile);
             rows = (int)grid.size();
-            cols = (int)grid[0].size();
-         
-
+            cols = rows;
+            
+            
+           
             auto board = std::make_unique<BoardGen>(rows, cols, bombs);
             board->setGrid(std::move(grid));
             auto boardView = std::make_unique<BoardViev>(board.get(), rows, cols);
@@ -157,7 +158,7 @@ int main()
             sf::RectangleShape divider({ 2.f, (float)winH });
             divider.setFillColor(sf::Color::Black);
             divider.setPosition(cols * cellSize, 0);
-
+            boardView->firstClick = false;
             while (game.isOpen()) {
                 sf::Event ev;
                 while (game.pollEvent(ev)) {
@@ -192,11 +193,12 @@ int main()
                                 if(cols == 16) { 
                                     bombs = 40; 
                                 }
-                                else {
+                                if (cols==32){
                                     bombs = 99;
                                 }
                                 board = std::make_unique<BoardGen>(rows, cols, bombs);
                                 boardView = std::make_unique<BoardViev>(board.get(), rows, cols);
+                                boardView->firstClick = true;
                                 
 
                             }

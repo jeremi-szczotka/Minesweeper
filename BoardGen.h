@@ -17,7 +17,7 @@ public:
     void generate(int startRow, int startCol);
     Cell* getCell(int row, int col) const;
     int getRows() const;
-    void revealCell(int row, int col);  // nowa metoda, bez zmiany starej logiki
+    void revealCell(int row, int col);  
     bool isGameOver() const;
     bool isGameWon() const;
     int getCols() const;
